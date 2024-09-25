@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yaswanth
+spec:
+  restartPolicy: Never
+  containers:
+  - name: yaswanth
+    image: crdsba6190deveastus001.azurecr.io/yaswanth:latest
+    volumeMounts:
+      - name: datalake
+        mountPath: "/mnt/datalake/"
+        readOnly: false
+    # command: ["/bin/bash", "-c"]
+    # args: ["./run.py"]
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+    # resources:
+    #   limits:
+    #     memory: "2Gi"
+    #     cpu: "200m"
+  imagePullSecrets:
+    - name: acr-secret
+  volumes:
+    - name: datalake
+      persistentVolumeClaim:
+        claimName: pvc-datalake-class-blob
